@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import { User } from "../../models/user/index.mjs";
 
 export const registerUser = async (req, res) => {
@@ -11,11 +10,9 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ msg: "User already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     user = new User({
       username,
-      password: hashedPassword,
+      password,
     });
 
     await user.save();
@@ -36,9 +33,7 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
+    if (user.password !== password) {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
 
