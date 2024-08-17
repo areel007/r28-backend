@@ -1,27 +1,9 @@
 import NewsAndEvents from "../../models/news.events/index.mjs";
-import fs from "fs";
-import path from "path";
 
 // Add news and events
 export const addNewsAndEvents = async (req, res) => {
-  let path = "";
   try {
-    if (req.files) {
-      const files = Array.isArray(req.files) ? req.files : [req.files];
-      files.forEach((file) => {
-        if (Array.isArray(file)) {
-          file.forEach((singleFile) => {
-            path = path + singleFile.path + ",";
-          });
-        } else {
-          path = path + file.path + ",";
-        }
-      });
-      path = path.substring(0, path.lastIndexOf(","));
-    }
-
-    const { title, subtitle, content } = req.body;
-    const newsImgUrl = path;
+    const { title, subtitle, content, newsImgUrl } = req.body;
 
     const news = new NewsAndEvents({
       title,
@@ -65,48 +47,11 @@ export const getNewsAndEvents = async (req, res) => {
 
 export const deleteNewsAndEvents = async (req, res) => {
   const { id } = req.params;
+
   try {
-    const newsAndEvents = await NewsAndEvents.findById(id);
-
-    if (!newsAndEvents) {
-      return res.status(404).json({ message: "Resource not found" });
-    }
-
-    if (!newsAndEvents.newsImgUrl) {
-      return res
-        .status(400)
-        .json({ message: "No images associated with this entry" });
-    }
-
-    // Extract image URLs
-    const imageUrls = newsAndEvents.newsImgUrl.split(",");
-
-    // Delete each image associated with the post
-    imageUrls.forEach(async (imageUrl) => {
-      try {
-        const imagePath = path.join(
-          __dirname,
-          "..",
-          "uploads",
-          imageUrl.trim()
-        );
-        if (fs.existsSync(imagePath)) {
-          await fs.promises.unlink(imagePath);
-        }
-      } catch (err) {
-        console.error("Error deleting file:", err);
-      }
-    });
-
-    // Delete the news and events entry
     await NewsAndEvents.findByIdAndDelete(id);
-
-    res.status(200).json({
-      message:
-        "News and events successfully deleted along with associated images",
-    });
+    res.status(200).json({ msg: "news and events deleted successfully." });
   } catch (error) {
-    console.error("Error deleting news and events:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json(error);
   }
 };
