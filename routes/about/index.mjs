@@ -32,9 +32,9 @@ router
   .patch(updateWhoWeAreBanner);
 
 // core values banner image
-router.route("/core-values/banner").post(addCoreValuesBanner);
+router.route("/core-values/banner-image").post(addCoreValuesBanner);
 router
-  .route("/core-values/banner/:id")
+  .route("/core-values/banner-image/:id")
   .get(getCoreValuesBanner)
   .patch(updateCoreValuesBanner);
 
