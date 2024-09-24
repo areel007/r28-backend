@@ -10,6 +10,7 @@ import overview from "../routes/home/overview/index.mjs";
 import stats from "../routes/home/stats/index.mjs";
 import whatWeDo from "../routes/home/what-we-do/index.mjs";
 import footer from "../routes/home/footer/index.mjs";
+import investments from "../routes/investments/index.mjs";
 
 const router = Router();
 
@@ -24,5 +25,6 @@ router.use("/api/home/overview", overview);
 router.use("/api/home/stats", stats);
 router.use("/api/home/what-we-do", whatWeDo);
 router.use("/api/home/footer", footer);
+router.use("/api/investments", investments);
 
 export default router;
