@@ -78,18 +78,24 @@ export const updateInvestment = async (req, res) => {
     tabText,
   } = req.body;
   try {
-    await Investment.findByIdAndUpdate(id, {
-      title,
-      highlight,
-      heroImage,
-      bannerImage,
-      content,
-      website,
-      logo,
-      sector,
-      heroText,
-      tabText,
-    });
+    await Investment.findByIdAndUpdate(
+      id,
+      {
+        title,
+        highlight,
+        heroImage,
+        bannerImage,
+        content,
+        website,
+        logo,
+        sector,
+        heroText,
+        tabText,
+      },
+      {
+        new: true,
+      }
+    );
     res.status(200).json({ message: "Investment successfully updated" });
   } catch (error) {
     res.status(500).json(error);
