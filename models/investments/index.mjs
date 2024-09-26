@@ -10,7 +10,6 @@ const investmentSchema = new Schema({
   },
   highlight: {
     type: String,
-    required: [true, "This field is required"],
   },
   sector: {
     type: String,
@@ -29,7 +28,6 @@ const investmentSchema = new Schema({
   },
   content: {
     type: String,
-    required: [true, "This field is required"],
   },
   website: {
     type: String,
