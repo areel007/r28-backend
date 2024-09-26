@@ -18,12 +18,14 @@ const investmentSchema = new Schema({
   },
   heroImage: {
     type: String,
+    default: "",
   },
   heroText: {
     type: String,
   },
   bannerImage: {
     type: String,
+    default: "",
   },
   content: {
     type: String,
